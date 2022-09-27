@@ -12,7 +12,7 @@ export interface ChatFooterProps {
 function ChatFooter({ roomCode, loggedInUser }: ChatFooterProps) {
 	const [ input, setInput ] = useState('');
 	const chatSocket = useChat();
-	const sendMessage = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+	const sendMessage = async (e: React.FormEvent) => {
 		e.preventDefault();
 		if (input) {
 			const messageDetails: ChatMessage = {
@@ -30,11 +30,9 @@ function ChatFooter({ roomCode, loggedInUser }: ChatFooterProps) {
 	};
 	return (
 		<div className="chat__footer">
-			<form>
+			<form onSubmit={sendMessage}>
 				<input value={input} onChange={(e) => setInput(e.target.value)} type="text" placeholder="Start typing.." />
-				<button onClick={sendMessage} type="submit">
-					Send
-				</button>
+				<button type="submit">Send</button>
 			</form>
 			<IconButton onClick={sendMessage}>
 				<SendIcon />

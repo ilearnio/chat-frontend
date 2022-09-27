@@ -22,8 +22,8 @@ export class SocketService {
 		this.socket.emit(ChatEvent.MESSAGE, message);
 	}
 
-	public updateUnread(unread: number, roomCode: string, username: string): void {
-		this.socket.emit(ChatEvent.UNREAD, { unread, roomCode, username });
+	public updateUnread(unread: number, roomCode: string, userId: string): void {
+		this.socket.emit(ChatEvent.UNREAD, { unread, roomCode, userId });
 	}
 
 	public onJoin(): Observable<JoinEventResp> {

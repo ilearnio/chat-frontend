@@ -1,8 +1,11 @@
 export interface User {
+	id: string;
 	username: string;
 	firstName?: string;
 	lastName?: string;
 	email?: string;
+	createdAt?: Date;
+	updatedAt?: Date;
 }
 
 export interface MessagePopulated {
@@ -12,6 +15,7 @@ export interface MessagePopulated {
 	user: User;
 	roomCode: string;
 	createdAt: string;
+	updatedAt: Date;
 }
 
 export interface RoomUserPopulated {
@@ -22,6 +26,7 @@ export interface RoomUserPopulated {
 export interface RoomPopulated {
 	code: string;
 	description: string;
+	ownerUserId: string;
 	lastActivity?: Date;
 	lastMessagePreview?: string;
 	users: Array<RoomUserPopulated>;

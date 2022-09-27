@@ -5,6 +5,7 @@ import './style.css';
 import { useChat } from '../../context/ChatContext';
 import { useUser } from '../../context/UserContext';
 import { RoomPopulated } from '../../types';
+import axios from 'axios';
 
 export interface NewRoomProps {
 	open: boolean;
@@ -26,7 +27,9 @@ function NewRoom({ open, onClose }: NewRoomProps) {
 		e.preventDefault();
 		if (isNew || (!isNew && roomCode)) {
 			try {
-				let { data } = isNew ? await chatHttp.createRoom({ description }) : await chatHttp.joinRoom({ roomCode });
+				let { data } = isNew
+					? await chatHttp.createRoom({ description })
+					: await chatHttp.joinRoom({ roomCode });
 				if (data) {
 					chatSocket.join({ name: userDetails.username, room: data.room.code }, true);
 					setisNew(true);
@@ -35,7 +38,10 @@ function NewRoom({ open, onClose }: NewRoomProps) {
 					handleClose(data.room);
 				}
 			} catch (e) {
-				console.log(e.response.data);
+				console.error(e)
+				if (axios.isAxiosError(e) && e.response?.data?.error) {
+					alert(e.response.data.error);
+				}
 			}
 		}
 	};
